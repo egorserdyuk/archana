@@ -8,6 +8,7 @@ license.workspace = true
 [dependencies]
 thiserror.workspace = true
 rayon.workspace = true
+walkdir = "2.5"
 
 zip = "2.2"
 tar = "0.4"

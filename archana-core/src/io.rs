@@ -1,8 +1,12 @@
-use std::io::{Read, Seek};
+use std::io::{Read, Seek, Write};
 
 pub trait ReadSeek: Read + Seek + Send {}
 
 impl<T: Read + Seek + Send> ReadSeek for T {}
+
+pub trait WriteSeek: Write + Seek + Send + Sync {}
+
+impl<T: Write + Seek + Send + Sync> WriteSeek for T {}
 
 pub fn detect_magic(path: &std::path::Path, bytes: usize) -> std::io::Result<Vec<u8>> {
     let mut file = std::fs::File::open(path)?;

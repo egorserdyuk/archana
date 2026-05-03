@@ -1,15 +1,16 @@
 use std::path::Path;
 
+use crate::io::WriteSeek;
 use crate::{AppendOptions, CreateOptions, Entry, ExtractOptions, Format, Result, Stats};
 
-pub trait ArchiveReader: Send + Sync {
+pub trait ArchiveReader: Send {
     fn entries(&mut self) -> Result<Box<dyn Iterator<Item = Result<Entry>> + '_>>;
     fn entry_by_name(&mut self, name: &str) -> Result<Option<Entry>>;
     fn extract_entry(&mut self, entry: &Entry, dest: &Path) -> Result<Stats>;
     fn extract_all(&mut self, dest: &Path, opts: &ExtractOptions) -> Result<Stats>;
 }
 
-pub trait ArchiveWriter: Send + Sync {
+pub trait ArchiveWriter: Send {
     fn append_file(&mut self, src: &Path, opts: &AppendOptions) -> Result<()>;
     fn append_dir_all(&mut self, src: &Path, opts: &AppendOptions) -> Result<()>;
     fn finish(self: Box<Self>) -> Result<Stats>;
@@ -19,7 +20,7 @@ pub(crate) trait FormatDriver: Send + Sync {
     fn magic_matches(&self, header: &[u8]) -> bool;
     fn format(&self) -> Format;
     fn open_read(&self, src: Box<dyn crate::io::ReadSeek>) -> Result<Box<dyn ArchiveReader>>;
-    fn open_write(&self, dst: Box<dyn std::io::Write>, opts: &CreateOptions) -> Result<Box<dyn ArchiveWriter>>;
+    fn open_write(&self, dst: Box<dyn WriteSeek>, opts: &CreateOptions) -> Result<Box<dyn ArchiveWriter>>;
 }
 
 pub struct FormatRegistry {
@@ -29,6 +30,11 @@ pub struct FormatRegistry {
 impl FormatRegistry {
     pub fn new() -> Self {
         Self { drivers: Vec::new() }
+    }
+
+    pub fn with_defaults() -> Self {
+        Self::new()
+            .with_driver(Box::new(crate::drivers::zip::ZipDriver))
     }
 
     pub fn with_driver(mut self, driver: Box<dyn FormatDriver>) -> Self {

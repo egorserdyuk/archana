@@ -1,4 +1,5 @@
 pub mod archive;
+pub mod drivers;
 pub mod error;
 pub mod format;
 pub mod io;
