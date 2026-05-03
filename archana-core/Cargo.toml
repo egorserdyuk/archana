@@ -1,0 +1,25 @@
+[package]
+name = "archana-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+thiserror.workspace = true
+rayon.workspace = true
+
+zip = "2.2"
+tar = "0.4"
+flate2 = "1.0"
+bzip2 = "0.5"
+xz2 = "0.1"
+zstd = "0.13"
+sevenz-rust = "0.6"
+
+[features]
+default = ["zip", "tar", "sevenzip"]
+zip = []
+tar = []
+sevenzip = []
+rar = []
