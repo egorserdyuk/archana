@@ -1,0 +1,15 @@
+[package]
+name = "archana-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "archana"
+path = "src/main.rs"
+
+[dependencies]
+archana-core = { path = "../archana-core" }
+clap = { version = "4.5", features = ["derive"] }
+anyhow = "1.0"

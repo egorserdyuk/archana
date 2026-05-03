@@ -1,0 +1,19 @@
+[workspace]
+members = ["archana-core", "archana-cli", "archana-gui"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["archana team"]
+license = "MIT"
+
+[workspace.dependencies]
+thiserror = "1.0"
+rayon = "1.10"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
