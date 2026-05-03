@@ -19,8 +19,8 @@ impl Default for ArchanaApp {
 }
 
 impl App for ArchanaApp {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut Frame) {
-        egui::CentralPanel::default().show(ctx, |ui| {
+    fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut Frame) {
+        egui::CentralPanel::default().show_inside(ui, |ui| {
             ui.heading("archana");
             ui.horizontal(|ui| {
                 if ui.button("Open").clicked() {

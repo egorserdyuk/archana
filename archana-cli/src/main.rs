@@ -45,7 +45,7 @@ fn run() -> Result<()> {
             );
         }
         
-        Command::Add { archive, files, format, compression } => {
+        Command::Add { archive, files, format, compression: _ } => {
             let format = format
                 .as_ref()
                 .and_then(|f| archana_core::Format::from_extension(f))
