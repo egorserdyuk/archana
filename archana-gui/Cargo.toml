@@ -5,5 +5,12 @@ edition.workspace = true
 authors.workspace = true
 license.workspace = true
 
+[[bin]]
+name = "archana-gui"
+path = "src/main.rs"
+
 [dependencies]
 archana-core = { path = "../archana-core" }
+eframe = "0.29"
+egui = "0.29"
+anyhow = "1.0"
