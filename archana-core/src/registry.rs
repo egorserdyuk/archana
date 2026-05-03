@@ -19,7 +19,9 @@ pub trait ArchiveWriter: Send {
 pub(crate) trait FormatDriver: Send + Sync {
     fn magic_matches(&self, header: &[u8]) -> bool;
     fn format(&self) -> Format;
+    #[allow(dead_code)]
     fn open_read(&self, src: Box<dyn crate::io::ReadSeek>) -> Result<Box<dyn ArchiveReader>>;
+    #[allow(dead_code)]
     fn open_write(&self, dst: Box<dyn WriteSeek>, opts: &CreateOptions) -> Result<Box<dyn ArchiveWriter>>;
 }
 
@@ -37,12 +39,12 @@ impl FormatRegistry {
             .with_driver(Box::new(crate::drivers::zip::ZipDriver))
     }
 
-    pub fn with_driver(mut self, driver: Box<dyn FormatDriver>) -> Self {
+    pub(crate) fn with_driver(mut self, driver: Box<dyn FormatDriver>) -> Self {
         self.drivers.push(driver);
         self
     }
 
-    pub fn detect(&self, src: &[u8]) -> Option<Format> {
+    pub(crate) fn detect(&self, src: &[u8]) -> Option<Format> {
         for driver in &self.drivers {
             if driver.magic_matches(src) {
                 return Some(driver.format());
@@ -51,7 +53,7 @@ impl FormatRegistry {
         None
     }
 
-    pub fn driver(&self, format: Format) -> Option<&dyn FormatDriver> {
+    pub(crate) fn driver(&self, format: Format) -> Option<&dyn FormatDriver> {
         for driver in &self.drivers {
             if driver.format() == format {
                 return Some(driver.as_ref());

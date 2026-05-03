@@ -10,6 +10,7 @@ use crate::Result;
 pub struct Archive {
     reader: Option<Box<dyn ArchiveReader>>,
     writer: Option<Box<dyn crate::registry::ArchiveWriter>>,
+    #[allow(dead_code)]
     format: Format,
 }
 

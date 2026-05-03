@@ -1,8 +1,10 @@
 use eframe::{App, Frame, NativeOptions};
 
 struct ArchanaApp {
+    #[allow(dead_code)]
     archive_path: Option<String>,
     entries: Vec<archana_core::Entry>,
+    #[allow(dead_code)]
     selected: Option<String>,
     status: String,
 }

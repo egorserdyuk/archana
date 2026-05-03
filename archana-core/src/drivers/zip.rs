@@ -236,7 +236,7 @@ impl ArchiveWriter for ZipWriter {
     }
 
     fn finish(self: Box<Self>) -> Result<Stats> {
-        let mut writer = self.writer.ok_or_else(|| Error::Custom("Writer not open".into()))?;
+        let writer = self.writer.ok_or_else(|| Error::Custom("Writer not open".into()))?;
         writer.finish().map_err(|e| Error::Custom(e.to_string()))?;
         Ok(Stats {
             files: 0,
