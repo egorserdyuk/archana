@@ -65,7 +65,9 @@ Cargo.lock
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
-### Windows ###
+# Worktrees
+.worktrees/
+worktrees/
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
@@ -92,3 +94,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,rust
+
+# Other
+*.md
+!README.md
+!ARCHITECTURE.md
